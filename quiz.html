@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест: нужен ли вам коучинг?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream: #FBF7F0;
+  --warm:  #F5EDD8;
+  --gold:  #C9943A;
+  --gold-l:#E8B85A;
+  --dark:  #1A1208;
+  --brown: #6B4F2A;
+  --gray:  #8C7A65;
+  --white: #FFFFFF;
+  --accent:#A0522D;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--cream);
+  color:var(--dark);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ─── BACKGROUND ─── */
+.bg-decor{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  overflow:hidden;
+}
+.bg-decor::before{
+  content:'';position:absolute;
+  top:-20%;right:-15%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,148,58,.1) 0%,transparent 65%);
+}
+.bg-decor::after{
+  content:'';position:absolute;
+  bottom:-10%;left:-10%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,148,58,.07) 0%,transparent 65%);
+}
+
+/* ─── WRAPPER ─── */
+.wrap{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:32px 20px 60px;
+}
+
+/* ─── CARD ─── */
+.card{
+  background:#fff;
+  border-radius:28px;
+  padding:48px 44px;
+  max-width:580px;width:100%;
+  box-shadow:0 8px 60px rgba(107,79,42,.1);
+  border:1px solid rgba(201,148,58,.12);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l),var(--gold));
+}
+
+/* ─── INTRO ─── */
+.intro{text-align:center}
+.intro-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(201,148,58,.1);
+  border:1px solid rgba(201,148,58,.25);
+  border-radius:100px;padding:6px 16px;
+  font-size:13px;color:var(--gold);font-weight:500;
+  margin-bottom:24px;
+}
+.intro-badge span{font-size:16px}
+.intro h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(26px,5vw,36px);
+  line-height:1.2;color:var(--dark);
+  margin-bottom:14px;
+}
+.intro h1 em{font-style:italic;color:var(--gold)}
+.intro p{
+  font-size:15px;line-height:1.72;
+  color:var(--gray);
+  max-width:420px;margin:0 auto 32px;
+}
+.intro-meta{
+  display:flex;align-items:center;justify-content:center;
+  gap:24px;margin-bottom:36px;
+}
+.meta-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--brown);
+}
+.meta-item svg{width:16px;height:16px;stroke:var(--gold);flex-shrink:0}
+.avatar-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-bottom:32px;
+}
+.avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+  border:3px solid #fff;
+  box-shadow:0 4px 16px rgba(201,148,58,.25);
+}
+.avatar-text{}
+.avatar-name{font-size:14px;font-weight:600;color:var(--dark)}
+.avatar-role{font-size:12px;color:var(--gray)}
+
+/* ─── PROGRESS ─── */
+.progress-wrap{margin-bottom:32px}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:var(--gray);
+  margin-bottom:8px;
+}
+.progress-bar{
+  height:5px;background:rgba(201,148,58,.15);
+  border-radius:100px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));
+  border-radius:100px;
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ─── QUESTION ─── */
+.question-section{display:none}
+.question-section.active{display:block}
+.q-num{
+  font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+}
+.q-text{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(20px,3.5vw,26px);
+  line-height:1.3;color:var(--dark);
+  margin-bottom:28px;
+}
+.options{display:flex;flex-direction:column;gap:12px}
+.option{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;border-radius:14px;
+  border:1.5px solid rgba(201,148,58,.2);
+  background:#fff;cursor:pointer;
+  transition:all .22s;
+  text-align:left;width:100%;
+}
+.option:hover{
+  border-color:var(--gold);
+  background:rgba(201,148,58,.05);
+}
+.option.selected{
+  border-color:var(--gold);
+  background:rgba(201,148,58,.08);
+}
+.opt-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(201,148,58,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+  transition:background .22s;
+}
+.option.selected .opt-icon{background:var(--gold);font-size:16px}
+.opt-text{
+  font-size:14.5px;line-height:1.5;
+  color:var(--dark);font-weight:400;
+  padding-top:7px;
+}
+.option.selected .opt-text{font-weight:500}
+
+/* ─── NAV ─── */
+.q-nav{
+  display:flex;justify-content:flex-end;
+  margin-top:28px;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;font-weight:500;
+  cursor:pointer;border:none;
+  transition:all .2s;text-decoration:none;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:#fff;
+  box-shadow:0 4px 20px rgba(201,148,58,.3);
+}
+.btn-gold:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(201,148,58,.4);
+}
+.btn-gold:disabled{
+  opacity:.45;pointer-events:none;
+}
+.btn-wa{
+  background:#25D366;color:#fff;
+  box-shadow:0 4px 20px rgba(37,211,102,.3);
+  font-size:15px;padding:14px 28px;width:100%;
+  justify-content:center;
+}
+.btn-wa:hover{
+  background:#22c35e;
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(37,211,102,.4);
+}
+.btn-ig{
+  background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366);
+  color:#fff;
+  box-shadow:0 4px 20px rgba(220,39,67,.25);
+  font-size:15px;padding:14px 28px;width:100%;
+  justify-content:center;margin-top:12px;
+}
+.btn-ig:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(220,39,67,.35);
+}
+
+/* ─── RESULT ─── */
+.result-section{display:none}
+.result-section.active{display:block}
+.result-top{
+  text-align:center;margin-bottom:28px;
+}
+.result-icon{
+  font-size:52px;margin-bottom:16px;
+  animation:pop .5s cubic-bezier(.4,0,.2,1);
+}
+@keyframes pop{
+  0%{transform:scale(.5);opacity:0}
+  70%{transform:scale(1.15)}
+  100%{transform:scale(1);opacity:1}
+}
+.result-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(201,148,58,.1);
+  border:1px solid rgba(201,148,58,.3);
+  border-radius:100px;padding:5px 14px;
+  font-size:12px;font-weight:600;color:var(--gold);
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.result-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,4vw,30px);
+  line-height:1.2;color:var(--dark);
+  margin-bottom:12px;
+}
+.result-title em{font-style:italic;color:var(--gold)}
+.result-desc{
+  font-size:15px;line-height:1.72;
+  color:var(--gray);max-width:440px;margin:0 auto 24px;
+}
+.result-points{
+  display:flex;flex-direction:column;gap:10px;
+  margin-bottom:28px;
+  text-align:left;
+}
+.rp{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 16px;
+  background:rgba(201,148,58,.06);
+  border:1px solid rgba(201,148,58,.14);
+  border-radius:12px;
+}
+.rp-icon{
+  font-size:20px;flex-shrink:0;margin-top:1px;
+}
+.rp-text{
+  font-size:14px;line-height:1.55;color:var(--dark);
+}
+.rp-text strong{color:var(--brown)}
+.divider{
+  height:1px;background:rgba(201,148,58,.15);
+  margin:24px 0;
+}
+.cta-label{
+  text-align:center;
+  font-size:13px;color:var(--gray);
+  margin-bottom:14px;
+}
+
+/* ─── FOOTER ─── */
+.page-footer{
+  margin-top:24px;text-align:center;
+  font-size:12px;color:var(--gray);
+}
+.page-footer a{color:var(--gold);text-decoration:none}
+
+/* ─── FADE ─── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
+}
+.fade-in{animation:fadeUp .4s ease both}
+
+/* ─── MOBILE ─── */
+@media(max-width:600px){
+  .card{padding:32px 24px}
+  .intro-meta{flex-direction:column;gap:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+
+<div class="wrap">
+  <div class="card" id="card">
+
+    <!-- ═══ INTRO ═══ -->
+    <div class="intro fade-in" id="intro">
+      <div class="intro-badge"><span>✨</span> Бесплатный тест · 2 минуты</div>
+      <h1>Нужен ли вам<br><em>коучинг</em>?</h1>
+      <p>Ответьте на 5 вопросов и узнайте, какой формат коучинга подходит именно вам — для себя, семьи или карьеры.</p>
+      <div class="avatar-row">
+        <div class="avatar">👩‍💼</div>
+        <div class="avatar-text">
+          <div class="avatar-name">Екатерина Гендашева</div>
+          <div class="avatar-role">Коуч ICF · Автор курса ICU</div>
+        </div>
+      </div>
+      <div class="intro-meta">
+        <div class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          5 вопросов
+        </div>
+        <div class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Честный результат
+        </div>
+        <div class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Бесплатно
+        </div>
+      </div>
+      <button class="btn btn-gold" onclick="startQuiz()" style="width:100%;justify-content:center;font-size:16px;padding:15px;">
+        Пройти тест →
+      </button>
+    </div>
+
+    <!-- ═══ PROGRESS (hidden until quiz starts) ═══ -->
+    <div class="progress-wrap" id="progress-wrap" style="display:none">
+      <div class="progress-label">
+        <span id="prog-text">Вопрос 1 из 5</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- ═══ QUESTIONS ═══ -->
+
+    <div class="question-section" id="q1">
+      <div class="q-num">Вопрос 1 из 5</div>
+      <div class="q-text">В какой сфере жизни вы больше всего хотите изменений прямо сейчас?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this,'q1','self')">
+          <div class="opt-icon">🙋</div>
+          <div class="opt-text">Для себя — хочу понять своё призвание, цели и ценности</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q1','family')">
+          <div class="opt-icon">👨‍👩‍👧</div>
+          <div class="opt-text">Для семьи — хочу улучшить отношения с близкими</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q1','work')">
+          <div class="opt-icon">💼</div>
+          <div class="opt-text">Для работы — хочу расти в карьере или построить бизнес</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q1','coach')">
+          <div class="opt-icon">🌟</div>
+          <div class="opt-text">Хочу стать коучем и помогать другим людям</div>
+        </button>
+      </div>
+      <div class="q-nav"><button class="btn btn-gold" id="btn-q1" onclick="nextQuestion(2)" disabled>Далее →</button></div>
+    </div>
+
+    <div class="question-section" id="q2">
+      <div class="q-num">Вопрос 2 из 5</div>
+      <div class="q-text">Как часто вы чувствуете, что топчетесь на месте — несмотря на все усилия?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this,'q2','always')">
+          <div class="opt-icon">😔</div>
+          <div class="opt-text">Постоянно — и не понимаю, как из этого выбраться</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q2','often')">
+          <div class="opt-icon">😐</div>
+          <div class="opt-text">Периодически — хочу большего, но что-то тормозит</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q2','rare')">
+          <div class="opt-icon">🙂</div>
+          <div class="opt-text">Редко — в целом двигаюсь, но хочу расти быстрее</div>
+        </button>
+      </div>
+      <div class="q-nav"><button class="btn btn-gold" id="btn-q2" onclick="nextQuestion(3)" disabled>Далее →</button></div>
+    </div>
+
+    <div class="question-section" id="q3">
+      <div class="q-num">Вопрос 3 из 5</div>
+      <div class="q-text">Как вы обычно принимаете важные решения в жизни?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this,'q3','delay')">
+          <div class="opt-icon">⏳</div>
+          <div class="opt-text">Откладываю — боюсь ошибиться и нести ответственность</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q3','advice')">
+          <div class="opt-icon">🗣️</div>
+          <div class="opt-text">Прошу совета у всех подряд, но итог всё равно не устраивает</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q3','doubt')">
+          <div class="opt-icon">🤔</div>
+          <div class="opt-text">Действую, но потом долго сомневаюсь — правильно ли я решил</div>
+        </button>
+      </div>
+      <div class="q-nav"><button class="btn btn-gold" id="btn-q3" onclick="nextQuestion(4)" disabled>Далее →</button></div>
+    </div>
+
+    <div class="question-section" id="q4">
+      <div class="q-num">Вопрос 4 из 5</div>
+      <div class="q-text">Какое из описаний лучше всего подходит к вашей ситуации?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this,'q4','know_want')">
+          <div class="opt-icon">🎯</div>
+          <div class="opt-text">Знаю чего хочу — но не знаю, как это получить</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q4','lost')">
+          <div class="opt-icon">🌫️</div>
+          <div class="opt-text">Не понимаю чего хочу — всё размыто и неопределённо</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q4','empty')">
+          <div class="opt-icon">🏆</div>
+          <div class="opt-text">Достигаю целей, но не чувствую удовлетворения и радости</div>
+        </button>
+      </div>
+      <div class="q-nav"><button class="btn btn-gold" id="btn-q4" onclick="nextQuestion(5)" disabled>Далее →</button></div>
+    </div>
+
+    <div class="question-section" id="q5">
+      <div class="q-num">Вопрос 5 из 5</div>
+      <div class="q-text">Если за 3 месяца вы могли бы полностью изменить одну сферу жизни — что бы выбрали?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this,'q5','career')">
+          <div class="opt-icon">🚀</div>
+          <div class="opt-text">Карьеру и финансы — хочу зарабатывать и расти</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q5','relations')">
+          <div class="opt-icon">❤️</div>
+          <div class="opt-text">Отношения и семью — хочу гармонии и близости</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q5','confidence')">
+          <div class="opt-icon">💪</div>
+          <div class="opt-text">Уверенность в себе — хочу чувствовать внутреннюю силу</div>
+        </button>
+        <button class="option" onclick="selectOption(this,'q5','become_coach')">
+          <div class="opt-icon">🎓</div>
+          <div class="opt-text">Профессию — хочу стать коучем и зарабатывать на призвании</div>
+        </button>
+      </div>
+      <div class="q-nav"><button class="btn btn-gold" id="btn-q5" onclick="showResult()" disabled>Узнать результат →</button></div>
+    </div>
+
+    <!-- ═══ RESULT ═══ -->
+    <div class="result-section" id="result">
+      <div class="result-top fade-in">
+        <div class="result-icon" id="res-icon">✨</div>
+        <div class="result-tag">Ваш результат</div>
+        <div class="result-title" id="res-title">Вам нужен <em>коучинг</em></div>
+        <div class="result-desc" id="res-desc">Ваши ответы показывают чёткую картину.</div>
+      </div>
+
+      <div class="result-points" id="res-points"></div>
+
+      <div class="divider"></div>
+
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--dark);margin-bottom:6px">
+          Готовы сделать первый шаг?
+        </div>
+        <div class="cta-label">Екатерина ответит лично и поможет выбрать подходящий формат</div>
+      </div>
+
+      <a href="https://wa.me/87776490977?text=Привет! Я прошла тест и хочу узнать подробнее о коучинге" target="_blank" rel="noopener" class="btn btn-wa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Написать Екатерине в WhatsApp
+      </a>
+      <a href="https://www.instagram.com/perevod_online_ast?igsh=YjcxaHp1NjZwcms3" target="_blank" rel="noopener" class="btn btn-ig">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Подписаться в Instagram
+      </a>
+
+      <div class="divider"></div>
+      <div style="text-align:center">
+        <a href="index.html" style="font-size:13px;color:var(--gray);text-decoration:none">
+          ← Вернуться на главную LingvaHub
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    © 2025 Екатерина Гендашева · Коуч ICF ·
+    <a href="https://www.instagram.com/perevod_online_ast?igsh=YjcxaHp1NjZwcms3" target="_blank">Instagram</a>
+  </div>
+</div>
+
+<script>
+const answers = {};
+
+const results = {
+  self: {
+    icon: '🌱',
+    title: 'Вам нужен <em>личный коучинг</em>',
+    desc: 'Ваши ответы показывают: вы готовы к переменам, но пока не знаете, с чего начать. Коучинг поможет найти ясность, поставить правильные цели и двигаться к ним с уверенностью.',
+    points: [
+      { icon: '🎯', text: '<strong>Ясность в целях.</strong> Вы поймёте, чего по-настоящему хотите — без чужих ожиданий и «надо»' },
+      { icon: '⚡', text: '<strong>Внутренний ресурс.</strong> Научитесь опираться на свою силу, а не искать мотивацию извне' },
+      { icon: '🗺️', text: '<strong>Конкретный план.</strong> Не просто мечты — чёткие шаги к вашей лучшей версии себя' },
+    ]
+  },
+  family: {
+    icon: '❤️',
+    title: 'Вам нужен <em>семейный коучинг</em>',
+    desc: 'Ваши ответы указывают: гармония в отношениях — ваш главный приоритет. Коучинг помогает выстроить глубокую связь, научиться слышать друг друга и решать конфликты экологично.',
+    points: [
+      { icon: '🤝', text: '<strong>Глубокое понимание.</strong> Научитесь слышать близких — и быть услышанной сами' },
+      { icon: '🌿', text: '<strong>Экологичные границы.</strong> Без скандалов и обид — через уважение и диалог' },
+      { icon: '🏡', text: '<strong>Тёплая атмосфера дома.</strong> Когда каждый член семьи чувствует поддержку и любовь' },
+    ]
+  },
+  work: {
+    icon: '🚀',
+    title: 'Вам нужен <em>карьерный коучинг</em>',
+    desc: 'Ваши ответы показывают: вы нацелены на профессиональный рост, но что-то мешает двигаться быстрее. Коучинг раскроет ваш лидерский потенциал и поможет выйти на новый уровень.',
+    points: [
+      { icon: '💼', text: '<strong>Карьерная стратегия.</strong> Чёткое понимание, куда двигаться и как выделиться среди конкурентов' },
+      { icon: '🦁', text: '<strong>Лидерские качества.</strong> Научитесь управлять командой и собой в любых ситуациях' },
+      { icon: '💰', text: '<strong>Рост дохода.</strong> Инструменты, которые переведут вас на следующий финансовый уровень' },
+    ]
+  },
+  coach: {
+    icon: '🎓',
+    title: 'Вам нужен <em>курс ICU</em>',
+    desc: 'Вы готовы помогать другим — это ваше призвание. Курс ICU даст вам профессиональные инструменты коуча ICF, уверенность в практике и первых клиентов уже в процессе обучения.',
+    points: [
+      { icon: '📜', text: '<strong>Сертификация ICF.</strong> Международно признанный диплом, который открывает двери по всему миру' },
+      { icon: '🛠️', text: '<strong>Практика с первого дня.</strong> Реальные сессии, живые клиенты, разбор кейсов' },
+      { icon: '💼', text: '<strong>Готовая практика.</strong> После курса — не «ищете клиентов», а уже работаете и зарабатываете' },
+    ]
+  }
+};
+
+function startQuiz() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'block';
+  showQuestion(1);
+}
+
+function showQuestion(n) {
+  document.querySelectorAll('.question-section').forEach(s => s.classList.remove('active'));
+  const q = document.getElementById('q' + n);
+  q.classList.add('active');
+  q.classList.add('fade-in');
+  setTimeout(() => q.classList.remove('fade-in'), 400);
+  updateProgress(n);
+}
+
+function updateProgress(n) {
+  const pct = Math.round(((n - 1) / 5) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = 'Вопрос ' + n + ' из 5';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function selectOption(el, qId, value) {
+  el.closest('.options').querySelectorAll('.option').forEach(o => {
+    o.classList.remove('selected');
+    o.querySelector('.opt-icon').textContent = o.querySelector('.opt-icon').dataset.orig || o.querySelector('.opt-icon').textContent;
+  });
+  el.classList.add('selected');
+  answers[qId] = value;
+  document.getElementById('btn-' + qId).disabled = false;
+}
+
+function nextQuestion(n) {
+  showQuestion(n);
+}
+
+function showResult() {
+  document.querySelectorAll('.question-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('progress-wrap').style.display = 'none';
+
+  const profile = answers.q1 || 'self';
+  const r = results[profile];
+
+  document.getElementById('res-icon').textContent = r.icon;
+  document.getElementById('res-title').innerHTML = r.title;
+  document.getElementById('res-desc').textContent = r.desc;
+
+  const pts = document.getElementById('res-points');
+  pts.innerHTML = '';
+  r.points.forEach(p => {
+    pts.innerHTML += `<div class="rp"><div class="rp-icon">${p.icon}</div><div class="rp-text">${p.text}</div></div>`;
+  });
+
+  const res = document.getElementById('result');
+  res.classList.add('active');
+  res.classList.add('fade-in');
+  setTimeout(() => res.classList.remove('fade-in'), 400);
+
+  // Update progress to 100%
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('prog-fill').style.width = '100%';
+  document.getElementById('prog-text').textContent = 'Тест завершён';
+  document.getElementById('prog-pct').textContent = '100%';
+
+  // Personalise WhatsApp message
+  const msgs = {
+    self: 'Привет! Я прошла тест — мне нужен личный коучинг. Хочу узнать подробнее!',
+    family: 'Привет! Я прошла тест — интересует семейный коучинг. Расскажите подробнее!',
+    work: 'Привет! Я прошла тест — интересует карьерный коучинг. Как записаться?',
+    coach: 'Привет! Я прошла тест — хочу стать коучем. Расскажите про курс ICU!'
+  };
+  const wa = document.querySelector('.btn-wa');
+  wa.href = 'https://wa.me/87776490977?text=' + encodeURIComponent(msgs[profile]);
+}
+</script>
+</body>
+</html>
