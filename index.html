@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingvaHub — Профессиональные переводы документов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --dark:#0F2318;
+  --emerald:#1A5C38;
+  --emerald-mid:#226444;
+  --accent:#2E9E6B;
+  --accent-light:#3DB87C;
+  --gold:#C9A84C;
+  --gold-light:#E2C068;
+  --cream:#F4FAF6;
+  --light:#E8F2EC;
+  --white:#FFFFFF;
+  --gray:#5A7067;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+
+/* ─── NAVBAR ─── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;padding:0 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(15,35,24,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(201,168,76,.15);
+  transition:background .3s;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{
+  width:36px;height:36px;border-radius:9px;
+  background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:19px;color:#fff;
+  flex-shrink:0;
+}
+.logo-text{font-family:'DM Serif Display',serif;font-size:20px;color:#fff;letter-spacing:-.3px}
+.logo-text span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.68);text-decoration:none;font-size:14px;font-weight:400;transition:color .2s}
+.nav-links a:hover{color:#fff}
+
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all .2s;line-height:1;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(46,158,107,.3)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.08)}
+.btn-lg{padding:14px 28px;font-size:15px;border-radius:10px}
+.btn-dark{background:var(--dark);color:#fff}
+.btn-dark:hover{background:var(--emerald);transform:translateY(-1px)}
+
+/* ─── HERO ─── */
+.hero{
+  background:var(--dark);min-height:100vh;
+  padding-top:68px;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 65% at 78% 48%,rgba(46,158,107,.13) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-2px;left:0;right:0;height:120px;
+  background:linear-gradient(to bottom,transparent,var(--cream));
+  pointer-events:none;z-index:1;
+}
+.hero-container{
+  width:90%;max-width:1220px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;
+  align-items:center;padding:80px 0 100px;
+  position:relative;z-index:2;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(46,158,107,.13);
+  border:1px solid rgba(46,158,107,.28);
+  border-radius:100px;padding:6px 16px;
+  font-size:13px;color:var(--accent-light);
+  margin-bottom:22px;
+}
+.badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent-light);
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(34px,4.2vw,56px);
+  line-height:1.13;color:#fff;
+  margin-bottom:20px;
+}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero-sub{
+  font-size:16.5px;line-height:1.72;
+  color:rgba(255,255,255,.6);
+  margin-bottom:36px;max-width:470px;
+}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* gold separator */
+.gold-line{
+  display:inline-block;width:48px;height:2px;
+  background:var(--gold);border-radius:2px;
+  margin-bottom:18px;
+}
+
+/* ─── GLOBE ─── */
+.globe-wrapper{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  height:440px;
+}
+.globe-stage{
+  position:relative;width:300px;height:300px;
+}
+.globe-sphere{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 38% 36%,rgba(61,184,124,.22),rgba(15,35,24,.95) 68%);
+  border:1px solid rgba(46,158,107,.25);
+  box-shadow:0 0 70px rgba(46,158,107,.18),inset 0 0 50px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+.globe-grid-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.28}
+.globe-glow{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(46,158,107,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ─── STATS ─── */
+.stats{background:#fff;padding:0}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--light);
+  border-bottom:1px solid var(--light);
+}
+.stat-item{
+  padding:44px 28px;text-align:center;
+  border-right:1px solid var(--light);
+  position:relative;
+}
+.stat-item:last-child{border-right:none}
+.stat-number{
+  font-family:'DM Serif Display',serif;
+  font-size:46px;color:var(--accent);line-height:1;
+  margin-bottom:8px;
+}
+.stat-number sup{font-size:22px;color:var(--gold);vertical-align:super}
+.stat-label{font-size:14px;color:var(--gray);font-weight:400;line-height:1.4}
+
+/* ─── SECTION COMMON ─── */
+.container{width:90%;max-width:1220px;margin:0 auto}
+.section-label{
+  font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;
+}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(26px,2.8vw,40px);
+  line-height:1.18;color:var(--dark);
+  margin-bottom:14px;
+}
+.section-sub{font-size:16px;color:var(--gray);max-width:500px;line-height:1.72}
+.section-head{margin-bottom:56px}
+
+/* ─── SERVICES ─── */
+.services{padding:100px 0;background:var(--cream)}
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.service-card{
+  background:#fff;border-radius:18px;
+  padding:32px 28px;
+  border:1.5px solid transparent;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.service-card::after{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:var(--accent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s;
+}
+.service-card:hover{
+  border-color:rgba(46,158,107,.18);
+  box-shadow:0 12px 40px rgba(46,158,107,.1);
+  transform:translateY(-5px);
+}
+.service-card:hover::after{transform:scaleX(1)}
+.service-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:var(--light);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.service-icon svg{width:24px;height:24px;stroke:var(--accent)}
+.service-card h3{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--dark);margin-bottom:9px;
+}
+.service-card p{font-size:14px;color:var(--gray);line-height:1.65}
+
+/* ─── AUDIENCE ─── */
+.audience{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.audience::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(46,158,107,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.audience .section-title{color:#fff}
+.audience .section-label{color:var(--gold)}
+.audience .section-sub{color:rgba(255,255,255,.52)}
+.audience-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.audience-card{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;padding:40px 32px;
+  transition:all .3s;
+}
+.audience-card:hover{
+  background:rgba(46,158,107,.1);
+  border-color:rgba(46,158,107,.3);
+  transform:translateY(-5px);
+}
+.aud-emoji{font-size:38px;margin-bottom:18px;display:block}
+.audience-card h3{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:#fff;margin-bottom:11px;
+}
+.audience-card p{
+  font-size:14px;color:rgba(255,255,255,.57);
+  line-height:1.7;margin-bottom:22px;
+}
+.tag-row{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+  background:rgba(46,158,107,.13);
+  border:1px solid rgba(46,158,107,.28);
+  border-radius:100px;padding:4px 12px;
+  font-size:12px;color:var(--accent-light);
+}
+
+/* ─── AI SECTION ─── */
+.ai-section{padding:100px 0;background:var(--light)}
+.ai-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:64px;align-items:center;
+}
+.chat-demo{
+  background:#fff;border-radius:22px;
+  box-shadow:0 24px 70px rgba(0,0,0,.1);
+  overflow:hidden;
+}
+.chat-header{
+  background:var(--dark);padding:16px 20px;
+  display:flex;align-items:center;gap:12px;
+}
+.chat-av{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.chat-name-wrap{}
+.chat-nm{color:#fff;font-size:14px;font-weight:500;line-height:1.2}
+.chat-st{font-size:11.5px;color:var(--accent-light)}
+.chat-msgs{
+  padding:20px;
+  display:flex;flex-direction:column;gap:14px;
+  min-height:290px;
+}
+.msg{display:flex;flex-direction:column;max-width:82%}
+.msg.bot{align-self:flex-start}
+.msg.usr{align-self:flex-end}
+.bubble{
+  padding:11px 15px;border-radius:14px;
+  font-size:13.5px;line-height:1.55;
+}
+.msg.bot .bubble{background:var(--light);color:var(--dark);border-bottom-left-radius:4px}
+.msg.usr .bubble{background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.msg-t{font-size:11px;color:var(--gray);margin-top:4px}
+.msg.bot .msg-t{align-self:flex-start}
+.msg.usr .msg-t{align-self:flex-end}
+.chat-inp{
+  padding:14px 16px;
+  border-top:1px solid var(--light);
+  display:flex;gap:10px;align-items:center;
+}
+.chat-inp input{
+  flex:1;border:1.5px solid var(--light);
+  border-radius:9px;padding:9px 14px;
+  font-size:13px;font-family:'DM Sans',sans-serif;
+  color:var(--dark);outline:none;
+  transition:border-color .2s;
+}
+.chat-inp input:focus{border-color:var(--accent)}
+.send-btn{
+  width:38px;height:38px;border-radius:9px;
+  background:var(--accent);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;flex-shrink:0;
+}
+.send-btn:hover{background:var(--accent-light)}
+
+.ai-features .section-title{color:var(--dark)}
+.ai-features .section-sub{color:var(--gray);margin-bottom:36px}
+.feat-list{display:flex;flex-direction:column;gap:22px;margin-bottom:36px}
+.feat{display:flex;gap:16px;align-items:flex-start}
+.feat-ico{
+  width:46px;height:46px;border-radius:11px;
+  background:#fff;border:1.5px solid rgba(46,158,107,.18);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.feat-ico svg{width:22px;height:22px;stroke:var(--accent)}
+.feat-text h4{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:3px}
+.feat-text p{font-size:13.5px;color:var(--gray);line-height:1.6}
+
+/* ─── CONTACTS ─── */
+.contacts{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+.contacts::after{
+  content:'';position:absolute;
+  bottom:-200px;left:-200px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.contacts .section-title{color:#fff}
+.contacts .section-label{color:var(--gold)}
+.contacts .section-sub{color:rgba(255,255,255,.5)}
+.contacts-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:56px;align-items:start;
+}
+.social-list{display:flex;flex-direction:column;gap:14px}
+.social-card{
+  display:flex;align-items:center;gap:16px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;padding:18px 22px;
+  text-decoration:none;
+  transition:all .25s;
+}
+.social-card:hover{
+  transform:translateX(7px);
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.16);
+}
+.soc-ico{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.soc-ico.wa{background:#25D366}
+.soc-ico.tg{background:#0088CC}
+.soc-ico.ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.soc-info{flex:1}
+.soc-name{font-size:15px;font-weight:500;color:#fff;margin-bottom:2px}
+.soc-handle{font-size:13px;color:rgba(255,255,255,.45)}
+.soc-arr{font-size:16px;color:rgba(255,255,255,.25)}
+
+.pay-block{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:22px;padding:36px 32px;
+}
+.pay-title{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:#fff;margin-bottom:6px;
+}
+.pay-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:28px}
+.qr-wrap{
+  background:#fff;border-radius:16px;
+  padding:24px;text-align:center;margin-bottom:20px;
+}
+.qr-wrap img{width:180px;height:180px;object-fit:contain;display:block;margin:0 auto}
+.qr-placeholder{
+  width:180px;height:180px;
+  background:var(--light);border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;margin:0 auto;color:var(--gray);font-size:13px;
+}
+.kaspi-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.kb{
+  background:rgba(255,165,0,.12);
+  border:1px solid rgba(255,165,0,.28);
+  border-radius:6px;padding:4px 11px;
+  font-size:12px;color:#FFA500;font-weight:500;
+}
+.pay-owner{font-size:12px;color:rgba(255,255,255,.3)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:#070D09;padding:36px 0;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.footer-inner{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.3)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{
+  font-size:13px;color:rgba(255,255,255,.38);
+  text-decoration:none;transition:color .2s;
+}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+
+/* ─── FLOATING BUTTONS ─── */
+.float-bar{
+  position:fixed;bottom:26px;right:26px;
+  z-index:999;
+  display:flex;flex-direction:column;gap:12px;
+  align-items:flex-end;
+}
+.f-wrap{position:relative;display:flex;align-items:center}
+.f-tip{
+  position:absolute;right:62px;
+  background:rgba(15,35,24,.95);
+  color:#fff;font-size:12px;font-weight:500;
+  padding:5px 11px;border-radius:7px;
+  white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s;
+  border:1px solid rgba(255,255,255,.08);
+}
+.f-wrap:hover .f-tip{opacity:1}
+.f-btn{
+  width:54px;height:54px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  box-shadow:0 4px 20px rgba(0,0,0,.28);
+  transition:all .25s;
+  border:2.5px solid rgba(255,255,255,.15);
+}
+.f-btn:hover{transform:scale(1.1);box-shadow:0 6px 26px rgba(0,0,0,.35)}
+.f-btn.tg{background:#0088CC}
+.f-btn.wa{background:#25D366}
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+
+/* ─── MOBILE ─── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero-container{grid-template-columns:1fr;padding:56px 0 80px}
+  .globe-wrapper{display:none}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .stat-item:nth-child(3){border-top:1px solid var(--light)}
+  .stat-item:nth-child(4){border-top:1px solid var(--light);border-right:none}
+  .services-grid{grid-template-columns:1fr}
+  .audience-grid{grid-template-columns:1fr}
+  .ai-grid{grid-template-columns:1fr}
+  .contacts-grid{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
+  .hero h1{font-size:34px}
+  .hero-sub{font-size:15px}
+}
+@media(max-width:500px){
+  .navbar{padding:0 4%}
+  .container{width:94%}
+  .stat-number{font-size:36px}
+  .btn-lg{padding:13px 22px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-mark">L</div>
+    <span class="logo-text">Lingva<span>Hub</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#audience">Клиентам</a></li>
+    <li><a href="#ai">AI-ассистент</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="https://wa.me/87776490977" target="_blank" rel="noopener" class="btn btn-primary">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Написать нам
+  </a>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-container">
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Работаем 24/7 — ответ за 30 секунд
+      </div>
+      <h1>Говорите с миром<br>на <em>любом языке</em></h1>
+      <p class="hero-sub">Профессиональные переводы документов, деловой переписки и контента — для путешественников, студентов и компаний. Быстро, надёжно, конфиденциально.</p>
+      <div class="hero-cta">
+        <a href="https://wa.me/87776490977" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Написать в WhatsApp
+        </a>
+        <a href="https://t.me/lingvahub_bot" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+          AI-ассистент →
+        </a>
+      </div>
+    </div>
+
+    <div class="globe-wrapper" id="globe-wrapper">
+      <div class="globe-stage" id="globe-stage">
+        <div class="globe-glow"></div>
+        <div class="globe-sphere">
+          <svg class="globe-grid-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+            <!-- parallels -->
+            <ellipse cx="130" cy="130" rx="128" ry="30" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <ellipse cx="130" cy="130" rx="128" ry="65" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <ellipse cx="130" cy="130" rx="128" ry="100" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <line x1="2" y1="130" x2="258" y2="130" stroke="#3DB87C" stroke-width=".6"/>
+            <!-- meridians -->
+            <ellipse cx="130" cy="130" rx="40" ry="128" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <ellipse cx="130" cy="130" rx="80" ry="128" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <ellipse cx="130" cy="130" rx="110" ry="128" fill="none" stroke="#3DB87C" stroke-width=".6"/>
+            <line x1="130" y1="2" x2="130" y2="258" stroke="#3DB87C" stroke-width=".6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     STATS
+══════════════════════════════════════ -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number">50<sup>+</sup></div>
+        <div class="stat-label">языков перевода</div>
+      </div>
+      <div class="stat-item reveal reveal-d1">
+        <div class="stat-number">3 000<sup>+</sup></div>
+        <div class="stat-label">довольных клиентов</div>
+      </div>
+      <div class="stat-item reveal reveal-d2">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">приём заявок</div>
+      </div>
+      <div class="stat-item reveal reveal-d3">
+        <div class="stat-number">2 ч</div>
+        <div class="stat-label">срочный перевод</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Наши услуги</div>
+      <h2 class="section-title">Переводим всё,<br>что вам нужно</h2>
+      <p class="section-sub">От туристических документов до юридических контрактов — профессиональный подход к каждому тексту.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3>Документы и справки</h3>
+        <p>Паспорта, дипломы, контракты, свидетельства. Нотариальное заверение и апостиль под ключ.</p>
+      </div>
+
+      <div class="service-card reveal reveal-d1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v3M9 12h6"/></svg>
+        </div>
+        <h3>Деловой перевод</h3>
+        <p>Договоры, деловые письма, презентации, финансовая отчётность. Точность и деловой стиль.</p>
+      </div>
+
+      <div class="service-card reveal reveal-d2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        </div>
+        <h3>Туристические документы</h3>
+        <p>Визовые заявки, страховки, приглашения, бронирования отелей и авиабилеты.</p>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h3>Академический перевод</h3>
+        <p>Дипломные работы, научные статьи, транскрипты оценок для поступления в зарубежные вузы.</p>
+      </div>
+
+      <div class="service-card reveal reveal-d1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Локализация сайтов</h3>
+        <p>Адаптация контента с учётом культурных особенностей. Не перевод — полная локализация.</p>
+      </div>
+
+      <div class="service-card reveal reveal-d2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Устный перевод</h3>
+        <p>Переговоры, конференции, медицинские приёмы. Онлайн и очно по всему Казахстану.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     AUDIENCE
+══════════════════════════════════════ -->
+<section class="audience" id="audience">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Кому помогаем</div>
+      <h2 class="section-title">Решения для каждого</h2>
+      <p class="section-sub">Индивидуальный подход к задачам путешественников, студентов и бизнеса.</p>
+    </div>
+    <div class="audience-grid">
+
+      <div class="audience-card reveal">
+        <span class="aud-emoji">✈️</span>
+        <h3>Путешественники</h3>
+        <p>Собираетесь за рубеж? Поможем с переводом всех документов для визы, страховки и любых нужд в поездке.</p>
+        <div class="tag-row">
+          <span class="tag">Визовые документы</span>
+          <span class="tag">Страховки</span>
+          <span class="tag">Медсправки</span>
+        </div>
+      </div>
+
+      <div class="audience-card reveal reveal-d1">
+        <span class="aud-emoji">🎓</span>
+        <h3>Студенты</h3>
+        <p>Поступаете в зарубежный вуз? Переведём диплом, аттестат и подготовим академические документы с нотариальным заверением.</p>
+        <div class="tag-row">
+          <span class="tag">Перевод диплома</span>
+          <span class="tag">Нотариальное заверение</span>
+          <span class="tag">Апостиль</span>
+        </div>
+      </div>
+
+      <div class="audience-card reveal reveal-d2">
+        <span class="aud-emoji">🏢</span>
+        <h3>Компании</h3>
+        <p>Работаете с иностранными партнёрами? Обеспечим точный перевод контрактов, локализацию и устный перевод на переговорах.</p>
+        <div class="tag-row">
+          <span class="tag">Контракты</span>
+          <span class="tag">Локализация</span>
+          <span class="tag">Устный перевод</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     AI ASSISTANT
+══════════════════════════════════════ -->
+<section class="ai-section" id="ai">
+  <div class="container">
+    <div class="ai-grid">
+
+      <div class="chat-demo reveal">
+        <div class="chat-header">
+          <div class="chat-av">🤖</div>
+          <div class="chat-name-wrap">
+            <div class="chat-nm">LingvaHub AI</div>
+            <div class="chat-st">● Онлайн · отвечает за 30 сек</div>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chat-messages">
+          <div class="msg bot">
+            <div class="bubble">Привет! Я AI-ассистент LingvaHub. Опишите вашу задачу — скажу стоимость и срок прямо сейчас 🌍</div>
+            <div class="msg-t">только что</div>
+          </div>
+          <div class="msg usr">
+            <div class="bubble">Нужен перевод диплома с казахского на русский + нотариальное заверение</div>
+            <div class="msg-t">10:42</div>
+          </div>
+          <div class="msg bot">
+            <div class="bubble">Перевод диплома KZ → RU + нотариальное заверение:<br><br>💰 <strong>от 5 000 тг</strong><br>⏱ Срок: <strong>1–2 рабочих дня</strong><br><br>Оформить заявку? Передам менеджеру!</div>
+            <div class="msg-t">10:42</div>
+          </div>
+        </div>
+        <div class="chat-inp">
+          <input type="text" id="chat-field" placeholder="Опишите вашу задачу..." />
+          <button class="send-btn" onclick="openBot()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="ai-features reveal reveal-d1">
+        <div class="section-label">AI-ассистент</div>
+        <h2 class="section-title">Ответ за 30 секунд,<br>в любое время</h2>
+        <p class="section-sub">Наш Telegram-бот мгновенно оценит стоимость и срок, а затем передаст заявку менеджеру.</p>
+        <div class="feat-list">
+          <div class="feat">
+            <div class="feat-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="feat-text">
+              <h4>Мгновенная оценка</h4>
+              <p>Опишите задачу — бот назовёт цену и срок без ожидания</p>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="feat-text">
+              <h4>Работает 24/7</h4>
+              <p>Принимает заявки в любое время, включая выходные и праздники</p>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="feat-text">
+              <h4>Передача менеджеру</h4>
+              <p>После оценки заявка автоматически попадает к живому специалисту</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://t.me/lingvahub_bot" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Открыть AI-ассистента
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     CONTACTS
+══════════════════════════════════════ -->
+<section class="contacts" id="contacts">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Связаться с нами</div>
+      <h2 class="section-title">Мы на связи<br>всегда и везде</h2>
+      <p class="section-sub">Выберите удобный канал — ответим быстро и по делу.</p>
+    </div>
+    <div class="contacts-grid">
+
+      <div class="social-list reveal">
+        <a href="https://wa.me/87776490977" target="_blank" rel="noopener" class="social-card">
+          <div class="soc-ico wa">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </div>
+          <div class="soc-info">
+            <div class="soc-name">WhatsApp</div>
+            <div class="soc-handle">+7 777 649-09-77</div>
+          </div>
+          <div class="soc-arr">→</div>
+        </a>
+        <a href="https://t.me/lingvahub_bot" target="_blank" rel="noopener" class="social-card">
+          <div class="soc-ico tg">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </div>
+          <div class="soc-info">
+            <div class="soc-name">Telegram AI-ассистент</div>
+            <div class="soc-handle">@lingvahub_bot</div>
+          </div>
+          <div class="soc-arr">→</div>
+        </a>
+        <a href="https://instagram.com/perevod_online_ast" target="_blank" rel="noopener" class="social-card">
+          <div class="soc-ico ig">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div class="soc-info">
+            <div class="soc-name">Instagram</div>
+            <div class="soc-handle">@perevod_online_ast</div>
+          </div>
+          <div class="soc-arr">→</div>
+        </a>
+      </div>
+
+      <div class="pay-block reveal reveal-d1">
+        <div class="pay-title">Оплата через Kaspi</div>
+        <p class="pay-sub">Отсканируйте QR-код в приложении Kaspi</p>
+        <div class="qr-wrap">
+          <!--
+            KASPI QR: вставьте base64-строку в атрибут src ниже:
+            <img src="data:image/png;base64,ВАША_СТРОКА_ЗДЕСЬ" alt="Kaspi QR">
+
+            Пока отображается заглушка:
+          -->
+          <div class="qr-placeholder">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#5A7067" stroke-width="1.4">
+              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/>
+            </svg>
+            <span>Kaspi QR</span>
+          </div>
+        </div>
+        <div class="kaspi-badges">
+          <span class="kb">Kaspi Gold</span>
+          <span class="kb">Red+</span>
+          <span class="kb">Kredit</span>
+        </div>
+        <div class="pay-owner">ИП Гендашева Екатерина · с. Коянды, ул. Достык д. 18</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">L</div>
+        <span class="logo-text">Lingva<span>Hub</span></span>
+      </a>
+      <p class="footer-copy">© 2025 LingvaHub — ИП Гендашева Екатерина</p>
+      <div class="footer-links">
+        <a href="#services">Услуги</a>
+        <a href="#ai">AI-ассистент</a>
+        <a href="#contacts">Контакты</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     FLOATING BUTTONS
+══════════════════════════════════════ -->
+<div class="float-bar">
+  <div class="f-wrap">
+    <span class="f-tip">AI-ассистент</span>
+    <a href="https://t.me/lingvahub_bot" target="_blank" rel="noopener" class="f-btn tg">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+  <div class="f-wrap">
+    <span class="f-tip">WhatsApp</span>
+    <a href="https://wa.me/87776490977" target="_blank" rel="noopener" class="f-btn wa">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </a>
+  </div>
+</div>
+
+
+<script>
+// ─── GLOBE ORBITING LANGUAGES ───
+(function(){
+  const stage = document.getElementById('globe-stage');
+  if(!stage) return;
+
+  const langs = [
+    {label:'English',  r:168, a0:0,   spd:0.38,  gold:false},
+    {label:'Русский',  r:168, a0:60,  spd:0.38,  gold:false},
+    {label:'中文',      r:168, a0:120, spd:0.38,  gold:true },
+    {label:'العربية',  r:168, a0:180, spd:0.38,  gold:false},
+    {label:'Deutsch',  r:168, a0:240, spd:0.38,  gold:false},
+    {label:'Français', r:168, a0:300, spd:0.38,  gold:false},
+    {label:'Español',  r:142, a0:25,  spd:-0.30, gold:false},
+    {label:'Қазақша',  r:142, a0:145, spd:-0.30, gold:true },
+    {label:'Türkçe',   r:142, a0:265, spd:-0.30, gold:false},
+    {label:'日本語',    r:155, a0:75,  spd:0.50,  gold:false},
+    {label:'한국어',    r:155, a0:195, spd:0.50,  gold:false},
+  ];
+
+  const tags = langs.map(l => {
+    const el = document.createElement('div');
+    el.textContent = l.label;
+    el.style.position = 'absolute';
+    el.style.top = '50%';
+    el.style.left = '50%';
+    el.style.background = 'rgba(15,35,24,.82)';
+    el.style.border = '1px solid ' + (l.gold ? 'rgba(201,168,76,.45)' : 'rgba(46,158,107,.38)');
+    el.style.borderRadius = '20px';
+    el.style.padding = '5px 13px';
+    el.style.fontSize = '12px';
+    el.style.fontWeight = '500';
+    el.style.color = l.gold ? '#E2C068' : 'rgba(255,255,255,.85)';
+    el.style.whiteSpace = 'nowrap';
+    el.style.pointerEvents = 'none';
+    el.style.backdropFilter = 'blur(4px)';
+    stage.appendChild(el);
+    return el;
+  });
+
+  let t0 = performance.now();
+
+  function frame(now){
+    const sec = (now - t0) / 1000;
+    langs.forEach((l, i) => {
+      const a = (l.a0 + sec * l.spd * 28) * Math.PI / 180;
+      const x = Math.cos(a) * l.r;
+      const y = Math.sin(a) * l.r * 0.38;
+      const depth = (Math.sin(a) + 1) / 2;
+      const scale = 0.72 + 0.28 * depth;
+      const opacity = 0.28 + 0.72 * depth;
+      tags[i].style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+      tags[i].style.opacity = opacity;
+      tags[i].style.zIndex = Math.round(depth * 10);
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// ─── SCROLL REVEAL ───
+const revEls = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, {threshold: 0.1, rootMargin:'0px 0px -36px 0px'});
+revEls.forEach(el => revObs.observe(el));
+
+// ─── CHAT → TELEGRAM ───
+function openBot(){
+  const v = document.getElementById('chat-field').value.trim();
+  const url = v
+    ? 'https://t.me/lingvahub_bot?start=' + encodeURIComponent(v.slice(0,200))
+    : 'https://t.me/lingvahub_bot';
+  window.open(url, '_blank', 'noopener');
+}
+document.getElementById('chat-field').addEventListener('keydown', e => {
+  if(e.key === 'Enter') openBot();
+});
+
+// ─── NAVBAR SCROLL ───
+const nb = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nb.style.background = window.scrollY > 60
+    ? 'rgba(15,35,24,.99)'
+    : 'rgba(15,35,24,.96)';
+}, {passive:true});
+</script>
+</body>
+</html>
